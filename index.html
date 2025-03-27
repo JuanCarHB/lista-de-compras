@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .product-list {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .product-list li {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-list li button {
+            background-color: #f44336;
+        }
+
+        .product-list li button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lista de Compras</h1>
+
+    <div class="input-container">
+        <input type="text" id="productoInput" placeholder="Agregar producto...">
+        <button onclick="agregarProducto()">Agregar</button>
+    </div>
+
+    <ul id="listaDeCompras" class="product-list"></ul>
+</div>
+
+<script>
+// Arreglo para almacenar los productos
+const listaDeCompras = [];
+
+// Función para agregar un producto a la lista
+const agregarProducto = () => {
+    const producto = document.getElementById("productoInput").value.trim();
+    
+    if (producto === "") {
+        alert("Por favor ingresa un nombre de producto.");
+        return;
+    }
+
+    // Verificar que el producto no esté ya en la lista (sin duplicados)
+    if (!listaDeCompras.includes(producto)) {
+        listaDeCompras.push(producto);
+        mostrarLista();
+    } else {
+        alert("Este producto ya está en la lista.");
+    }
+
+    // Limpiar el campo de texto
+    document.getElementById("productoInput").value = "";
+};
+
+// Función para eliminar un producto de la lista
+const eliminarProducto = (producto) => {
+    const index = listaDeCompras.indexOf(producto);
+    if (index > -1) {
+        listaDeCompras.splice(index, 1);
+        mostrarLista();
+    }
+};
+
+// Función para mostrar la lista de productos
+const mostrarLista = () => {
+    const listaHTML = document.getElementById("listaDeCompras");
+    listaHTML.innerHTML = "";  // Limpiar la lista antes de mostrarla nuevamente
+
+    listaDeCompras.forEach(producto => {
+        const li = document.createElement("li");
+        li.innerHTML = `${producto} <button onclick="eliminarProducto('${producto}')">Eliminar</button>`;
+        listaHTML.appendChild(li);
+    });
+};
+</script>
+
+</body>
+</html>
